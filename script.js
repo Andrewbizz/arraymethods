@@ -261,12 +261,51 @@ console.log(movements);
 
 const balanceCalc = function (movements) {
   const totalBal = movements.reduce((a, mov) => a + mov, 0);
-  labelBalance.textContent = `${totalBal} EUR`;
+  labelBalance.textContent = `${totalBal} €`;
 };
 
 balanceCalc(account2.movements);
+const calcDisplaySummary = function (movements) {
+  const incomes = movements
+    .filter(move => {
+      return move > 0;
+    })
+    .reduce((acc, move) => {
+      return acc + move;
+    }, 0);
 
+  const outcome = movements
+    .filter(move => {
+      return move < 0;
+    })
+    .reduce((acc, move) => {
+      return acc + move;
+    }, 0);
+
+  const interest = movements
+    .filter(move => {
+      return move > 0;
+    })
+    .map(dep => {
+      return (dep * 1.2) / 100;
+    })
+    .filter((int, i, arr) => {
+      console.log(arr);
+      return int >= 1;
+    })
+    .reduce((a, int) => {
+      return a + int;
+    }, 0);
+
+  labelSumIn.textContent = `${incomes} €`;
+  labelSumOut.textContent = `${Math.abs(outcome)} €`;
+  labelSumInterest.textContent = `${Math.abs(interest.toFixed(0))} €`;
+};
+
+calcDisplaySummary(account1.movements);
 // finding the max value
+
+//array method chaining  only to be chained to things thatreturn arrays
 
 const max = movements.reduce((a, mov) => {
   if (a > mov) {
@@ -279,6 +318,15 @@ const max = movements.reduce((a, mov) => {
 console.log(max);
 
 console.log(movements.reduce((a, mov) => (a > mov ? a : mov), movements[0]));
+
+const totalDepositsUSD = movements
+  .filter(mov => mov > 0)
+  .map((mov, i, arr) => {
+    return mov * eurToUsd;
+  })
+  .reduce((a, el) => a + el, 0);
+
+console.log(totalDepositsUSD.toFixed(0));
 
 ///////////////////////////////////////
 // Coding Challenge #2
@@ -301,28 +349,28 @@ GOOD LUCK 😀
 
 // let output = [];
 
-function calcAverageHumanAge(ages) {
-  const allAges = ages.map(age => {
-    if (age <= 2) {
-      return age * 2;
-    } else {
-      return 16 + age * 4;
-    }
-  });
+// function calcAverageHumanAge(ages) {
+//   const allAges = ages.map(age => {
+//     if (age <= 2) {
+//       return age * 2;
+//     } else {
+//       return 16 + age * 4;
+//     }
+//   });
 
-  const adults = allAges.filter(i => i >= 18);
+//   const adults = allAges.filter(i => i >= 18);
 
-  const average =
-    adults.reduce((acc, el) => {
-      return acc + el;
-    }, 0) / adults.length;
+//   const average =
+//     adults.reduce((acc, el) => {
+//       return acc + el;
+//     }, 0) / adults.length;
 
-  console.log(allAges);
-  console.log(adults);
+//   console.log(allAges);
+//   console.log(adults);
 
-  return average.toFixed(0); // ✅ return something
-}
+//   return average.toFixed(0); // ✅ return something
+// }
 
-console.log(calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]));
+// console.log(calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]));
 
-console.log(calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]));
+// console.log(calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]));
