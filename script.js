@@ -146,15 +146,15 @@ displayMovements(account1.movements);
 //   ['GBP', 'Pound sterling'],
 // ]);
 
-// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 // // for (const movement of movements) {
 // for (const [i, movement] of movements.entries()) {
-//   if (movement > 0) {
-//     console.log(`in movement ${i + 1} you deposited ${movement}`);
-//   } else {
-//     console.log(`in movement ${i + 1} you withdrew ${Math.abs(movement)}`);
-//   }
+// if (movement > 0) {
+//   console.log(`in movement ${i + 1} you deposited ${movement}`);
+// } else {
+//   console.log(`in movement ${i + 1} you withdrew ${Math.abs(movement)}`);
+// }
 // }
 
 // console.log('------------- for each -------------');
@@ -181,3 +181,67 @@ displayMovements(account1.movements);
 // currenciesUnique.forEach((value, key, map) => {
 //   console.log(`${value} ${key} ${map}`);
 // });
+
+// Julia and Kate are doing a study on dogs. So each of them asked 5 dog owners about their dog's age, and stored the data into an array (one array for each). For now, they are just interested in knowing whether a dog is an adult or a puppy. A dog is an adult if it is at least 3 years old, and it's a puppy if it's less than 3 years old.
+
+// Create a function 'checkDogs', which accepts 2 arrays of dog's ages ('dogsJulia' and 'dogsKate'), and does the following things:
+
+// 1. Julia found out that the owners of the FIRST and the LAST TWO dogs actually have cats, not dogs! So create a shallow copy of Julia's array, and remove the cat ages from that copied array (because it's a bad practice to mutate function parameters)
+// 2. Create an array with both Julia's (corrected) and Kate's data
+// 3. For each remaining dog, log to the console whether it's an adult ("Dog number 1 is an adult, and is 5 years old") or a puppy ("Dog number 2 is still a puppy 🐶")
+// 4. Run the function for both test datasets
+
+// HINT: Use tools from all lectures in this section so far 😉
+
+// TEST DATA 1: Julia's data [3, 5, 2, 12, 7], Kate's data [4, 1, 15, 8, 3]
+// TEST DATA 2: Julia's data [9, 16, 6, 8, 3], Kate's data [10, 5, 6, 1, 4]
+
+// GOOD LUCK 😀
+
+// const juliasData = [3, 5, 2, 12, 7];
+// const katesData = [4, 1, 15, 8, 3];
+
+// const checkDogs = function (data1, data2) {
+//   data1 = [...data1].slice(1, -2);
+//   data2 = [...data2];
+
+//   const allDogs = [...data1, ...data2];
+
+//   allDogs.forEach((dog, i) => {
+//     if (dog >= 3) {
+//       console.log(`Dog number ${i + 1} is an adult, and is ${dog} years old"`);
+//     } else {
+//       console.log(`Dog number ${i + 1} is still a puppy 🐶`);
+//     }
+//   });
+// };
+
+// checkDogs(juliasData, katesData);
+
+const eurToUsd = 1.1;
+
+const moveToUsd = movements.map(mov => mov * eurToUsd);
+
+// console.log(moveToUsd);
+
+const movDesc = movements.map(
+  (mov, i) => `Move ${i + 1} you ${mov >= 0 ? 'deposited' : 'withdrew'} ${mov}`
+);
+
+console.log(movDesc);
+
+function uNameMaker(accr) {
+  accr.forEach(acc => {
+    acc.username = acc.owner
+      .toLocaleLowerCase()
+      .split(' ')
+      .map(user => {
+        return user[0];
+      })
+      .join('');
+  });
+}
+
+uNameMaker(accounts);
+
+console.log(accounts);
