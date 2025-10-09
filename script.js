@@ -245,3 +245,15 @@ function uNameMaker(accr) {
 uNameMaker(accounts);
 
 console.log(accounts);
+
+const deposits = movements.filter((mov, i) => {
+  return mov > 0;
+});
+
+const withdrawals = movements.filter((mov, i) => {
+  return mov < 0;
+});
+
+console.log(movements);
+console.log(deposits);
+console.log(withdrawals);
