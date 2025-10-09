@@ -374,3 +374,24 @@ GOOD LUCK 😀
 // console.log(calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]));
 
 // console.log(calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]));
+
+function calcAverageHumanAge(ages) {
+  const allAges = ages
+    .map(age => {
+      if (age <= 2) {
+        return age * 2;
+      } else {
+        return 16 + age * 4;
+      }
+    })
+    .filter(i => i >= 18)
+    .reduce((acc, el, i, arr) => acc + el / arr.length, 0);
+
+  console.log(allAges);
+
+  return allAges.toFixed(0); // ✅ return something
+}
+
+console.log(calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]));
+
+console.log(calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]));
