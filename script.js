@@ -254,6 +254,28 @@ const withdrawals = movements.filter((mov, i) => {
   return mov < 0;
 });
 
-console.log(movements);
+// the first value in a reduce method is called the accumulatore stored in 'a" variable below, also the initial value of this is specified aftyer the cal back function
 console.log(deposits);
 console.log(withdrawals);
+console.log(movements);
+
+const balanceCalc = function (movements) {
+  const totalBal = movements.reduce((a, mov) => a + mov, 0);
+  labelBalance.textContent = `${totalBal} EUR`;
+};
+
+balanceCalc(account2.movements);
+
+// finding the max value
+
+const max = movements.reduce((a, mov) => {
+  if (a > mov) {
+    return a;
+  } else {
+    return mov;
+  }
+}, movements[0]);
+
+console.log(max);
+
+console.log(movements.reduce((a, mov) => (a > mov ? a : mov), movements[0]));
