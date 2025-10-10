@@ -498,4 +498,17 @@ btnLoan.addEventListener('click', e => {
   }
 });
 
+// flat takes all nested arrays into one array
+//flatmap does both mapping and flat
 console.log(anydeposits);
+
+let arr = [[12, 3, 4, 5], [2, 3, 4, 5, 6, 7], 7, 7, 8, 9];
+arr = arr.flat();
+console.log(arr);
+
+let allAcctMove = accounts
+  .flatMap(mov => mov.movements)
+  .flat()
+  .reduce((a, mov, i) => a + mov);
+
+console.log(allAcctMove);
