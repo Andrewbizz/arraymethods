@@ -61,9 +61,11 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-const displayMovements = function (movements) {
+const displayMovements = function (movements, sort = false) {
+  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+
   containerMovements.innerHTML = '';
-  movements.forEach((mov, i) => {
+  movs.forEach((mov, i) => {
     const type = mov > 1 ? `deposit` : 'withdrawal';
     const htmll = `
     <div class="movements__row">
@@ -78,6 +80,14 @@ const displayMovements = function (movements) {
     containerMovements.insertAdjacentHTML('afterbegin', htmll);
   });
 };
+
+let sortState = false;
+
+btnSort.addEventListener('click', e => {
+  e.preventDefault();
+  displayMovements(enteredUname.movements, !sortState);
+  sortState = !sortState;
+});
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -504,11 +514,64 @@ console.log(anydeposits);
 
 let arr = [[12, 3, 4, 5], [2, 3, 4, 5, 6, 7], 7, 7, 8, 9];
 arr = arr.flat();
-console.log(arr);
+console.log(
+  arr.sort((a, b) => {
+    if (a > b) {
+      return 1;
+    } else {
+      return -1;
+    }
+  })
+);
 
-let allAcctMove = accounts
-  .flatMap(mov => mov.movements)
-  .flat()
-  .reduce((a, mov, i) => a + mov);
+// sorting with numbers and strings
 
-console.log(allAcctMove);
+// console.log(arr.sort((a, b) => a - b)); //acsend
+// console.log(arr.sort((a, b) => b - a)); // descend
+
+// let allAcctMove = accounts
+//   .flatMap(mov => mov.movements)
+//   .flat()
+//   .reduce((a, mov, i) => a + mov);
+
+// console.log(allAcctMove);
+
+// const owners = ['zac', 'drew', 'jawn', 'pat'];
+
+// console.log(owners.sort());
+
+const y = Array.from({ length: 100 }, (_, i) => i + 1);
+
+const h = Math.random() * y.length;
+
+console.log(h.toFixed(0));
+
+labelBalance.addEventListener('click', () => {
+  const movementUi = Array.from(
+    document.querySelectorAll('.movements__value'),
+    mov => Number(mov.textContent.replace('€', ''))
+  );
+  console.log(movementUi);
+});
+
+// find all the deposits
+const allBankDeposit = accounts
+  .flatMap(acct => acct.movements)
+  .filter(acc => acc > 0)
+  .reduce((acc, el) => acc + el, 0);
+
+console.log(allBankDeposit);
+
+// find all deposits that are above 1k
+const depAbove1k = accounts
+  .flatMap(acct => acct.movements)
+  .filter(acct => acct >= 1000).length;
+
+// same thing with reduce
+
+const depAbove1k2 = accounts
+  .flatMap(acc => acc.movements)
+  .reduce((a, el) => (el >= 1000 ? a + 1 : a), 0);
+
+console.log(depAbove1k);
+console.log(depAbove1k2);
